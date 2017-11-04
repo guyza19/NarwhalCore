@@ -130,15 +130,14 @@ class Main extends PluginBase implements Listener{
      */
     public function onInteract(PlayerInteractEvent $e){
 		$p = $e->getPlayer();
-		$item = $p->getInventory()->getItemInHand()->getName();
-		switch($item){
-            case "§a§lInfo":
+		$item = $e->getItem()->getName();
+            if ($item == "§a§lInfo") {
                 $p->addTitle("§fYou're on §cN§6a§er§aw§bh§da§5l§fPE", "§7Have fun!", -1, 5*20, 30);
-                break;
-            case "§b§lTeleport":
+	    }
+            if ($item == "§b§lTeleport") {
                 $this->TeleportItems($p);
-                break;
-            case "§e§lSend me something random!":
+	    }
+            if ($item ==  "§e§lSend me something random!") {
                 $ids = array (334, 335, 336, 337, 338, 339, 340, 341, 342, 343, 344, 345, 346, 347, 348, 349, 350, 351, 352, 353, 354, 355, 356, 357, 358, 359, 360, 361, 362, 363, 364, 365, 366, 367, 368, 369, 370, 371, 372, 373, 374, 375, 376, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 387, 388, 389, 390, 391, 392, 393, 394, 395, 396, 397, 398, 399, 400, 444); //Ah.
                 $randomid = array_rand($ids, 1);
                 $nums = array (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
@@ -148,20 +147,19 @@ class Main extends PluginBase implements Listener{
 
                 $p->addTitle("§bComing up!", "§7§oYou randomly got ".$randomcount." ".$names[$randomname]."(s).");
                 $p->getInventory()->addItem(Item::get($randomid, 0, $randomcount)->setCustomName($names[$randomname]));
-                break;
-            case "§aH§6u§eb":
+	    }
+            if ($item == "§aH§6u§eb") {
                 $p->addTitle("§bTeleported you to the lobby.");
                 $p->teleport($this->getServer()->getLevelByName("Hub")->getSafeSpawn());
                 $this->MainItems($p);
-                break;
-            case "§cBack":
+	    }
+            if ($item == "§cBack") {
                 $this->MainItems($p);
-                break;
-            case "§6Plots":
+	    }
+            if ($item == "§6Plots") {
                 $p->addTitle("§6Teleported you to Plots.");
                 $p->teleport($this->getServer()->getLevelByName("Plots")->getSafeSpawn());
-                break;
-        }
+	    }
 	}
 
     /**
@@ -170,7 +168,7 @@ class Main extends PluginBase implements Listener{
     public function onDropItem(PlayerDropItemEvent $e){
 		$p = $e->getPlayer();
 		$lvlname = $p->getLevel()->getName();
-		if(stripos("SW", $lvlname) === false){
+		if($lvlname == "SW"){
 			$e->setCancelled();
 			$p->sendMessage(c::YELLOW . "You ".c::RED."can't ".c::YELLOW."drop items or blocks on this world.");
 		}
